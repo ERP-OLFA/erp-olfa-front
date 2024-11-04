@@ -1,0 +1,56 @@
+/* sidebar.css */
+.sidebar {
+  position: fixed; /* Fix the sidebar on the side of the viewport */
+  top: 0;
+  bottom: 0;
+  right: 0; /* Align sidebar to the right */
+  width: 250px; /* Adjust width as needed */
+  padding: 10px;
+  background-color: #343a40;
+  overflow-y: auto; /* Enable scrolling if content overflows */
+  transition: transform 0.3s ease; /* Smooth transition for show/hide */
+}
+
+.sidebar .nav-link {
+  color: #adb5bd;
+  font-size: 18px;
+  padding: 10px 15px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #495057;
+  color: #fff;
+}
+
+.sidebar .logout-link {
+  color: #f8d7da;
+}
+
+.sidebar .logout-link:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* For smaller screens */
+@media (max-width: 767px) {
+  .sidebar {
+    transform: translateX(100%); /* Hide sidebar off-screen initially */
+    width: 100%; /* Full width on mobile */
+    height: 100vh; /* Full height */
+    right: 0; /* Ensure it's positioned to the right */
+  }
+  .sidebar.sidebar-open {
+    transform: translateX(0); /* Show sidebar when open */
+  }
+}
+
+.content {
+  margin-right: 250px; /* Adjust based on sidebar width */
+  transition: margin-right 0.3s ease;
+}
+
+.content.sidebar-open {
+  margin-right: 0; /* Adjust for sidebar visibility on mobile */
+}

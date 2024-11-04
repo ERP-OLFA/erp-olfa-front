@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa; /* Light background color */
+}
+
+.login-card {
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.rounded-start {
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+.form-outline .form-control {
+  border-radius: 0.5rem;
+  border: 1px solid #ced4da; /* Light border */
+  transition: border-color 0.3s;
+}
+
+.form-outline .form-control:focus {
+  border-color: #007bff; /* Change border color on focus */
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25); /* Light blue shadow */
+}
+
+.btn {
+  border-radius: 0.5rem;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+}
+
+.btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: translateY(-2px); /* Lift effect */
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin-bottom: 2rem; /* Space between title and form */
+  color: #343a40; /* Darker text color */
+}
