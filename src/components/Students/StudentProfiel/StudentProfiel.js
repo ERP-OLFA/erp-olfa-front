@@ -46,7 +46,7 @@ function StudentProfile() {
   }, [id]);
 
   const getArchivedPresence = () => {
-    axios.get(`http://localhost:3001/archivedpresence/` + id)
+    axios.get(`http://erp-olfa-back.onrender.com/archivedpresence/` + id)
       .then((response) => {
         setStudentsPresenceAchievement(response.data);
       })
@@ -56,7 +56,7 @@ function StudentProfile() {
   };
 
   const getPaymentsstudent = () => {
-    axios.get(`http://localhost:3001/getPaymentsstudent/${id}`)
+    axios.get(`http://erp-olfa-back.onrender.com/getPaymentsstudent/${id}`)
       .then((response) => {
         setPaymentsstudent(response.data);
       })
@@ -83,7 +83,7 @@ function StudentProfile() {
     if (formState.numerotlfparent !== numerotlfparent) updatedFields.numerotlfparent = formState.numerotlfparent;
     if (formState.cardid !== cardid) updatedFields.cardid = formState.cardid;
 
-    axios.put(`http://localhost:3001/updateStudent/${id}`, updatedFields)
+    axios.put(`http://erp-olfa-back.onrender.com/updateStudent/${id}`, updatedFields)
       .then(response => {
         console.log("Student info updated successfully");
         history.push("/List/Std")
@@ -188,7 +188,7 @@ function StudentProfile() {
   const [paymentDate, setPaymentDate] = useState("");
 
   const updatePaymentAmount = (updatedPayment) => {
-    axios.put(`http://localhost:3001/updatePaymentAmount/${updatedPayment.id}`, updatedPayment)
+    axios.put(`http://erp-olfa-back.onrender.com/updatePaymentAmount/${updatedPayment.id}`, updatedPayment)
       .then((response) => {
         console.log("Payment updated successfully");
         getPaymentsstudent(); // Refresh the payments data

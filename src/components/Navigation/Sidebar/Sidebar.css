@@ -33,24 +33,20 @@
   color: #fff;
 }
 
-/* For smaller screens */
-@media (max-width: 767px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .sidebar {
-    transform: translateX(100%); /* Hide sidebar off-screen initially */
-    width: 100%; /* Full width on mobile */
-    height: 100vh; /* Full height */
-    right: 0; /* Ensure it's positioned to the right */
+    position: fixed; /* Keep the sidebar fixed */
+    transform: translateX(0); /* Ensure it starts visible */
+    width: 250px; /* Set a fixed width */
+    height: 100%; /* Full height */
   }
-  .sidebar.sidebar-open {
-    transform: translateX(0); /* Show sidebar when open */
+
+  .content {
+    margin-right: 250px; /* Margin for content when sidebar is open */
+    transition: margin-right 0.3s ease;
   }
-}
 
-.content {
-  margin-right: 250px; /* Adjust based on sidebar width */
-  transition: margin-right 0.3s ease;
-}
-
-.content.sidebar-open {
-  margin-right: 0; /* Adjust for sidebar visibility on mobile */
+  .content.sidebar-open {
+    margin-right: 0; /* No margin when sidebar is hidden */
+  }
 }

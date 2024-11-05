@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal, Button, Form, Alert, Table } from "react-bootstrap";
 import { useHistory, useParams } from 'react-router-dom';
-
+import Loader from "../../Loader/Loader";
 function ClassesList() {
   const { id } = useParams();
   const [classInfo, setClassInfo] = useState(null);
@@ -55,7 +55,7 @@ function ClassesList() {
   const handleAlertClose = () => setShowAlert(false);
   const getStudentData = (id) => {
     axios
-      .get(`http://localhost:3001/getStudentbyId/${id}`)
+      .get(`http://erp-olfa-back.onrender.com/getStudentbyId/${id}`)
       .then((response) => {
         const studentData = response.data.rows;
         history.push('/List/StudentProfiel', { id: studentData[0] });
@@ -65,13 +65,13 @@ function ClassesList() {
       });
   };
   const updateClassMonth = async () => {
-    await axios.put(`http://localhost:3001/updateClassMonth/${classInfo.id}`).then((response) => {
+    await axios.put(`http://erp-olfa-back.onrender.com/updateClassMonth/${classInfo.id}`).then((response) => {
       console.log(response)
     })
   }
   const addClassMonth = async (studentIds, attendance_count) => {
     try {
-      await axios.post("http://localhost:3001/addPreviousClass", {
+      await axios.post("http://erp-olfa-back.onrender.com/addPreviousClass", {
         teacher_id: classInfo.teacher_id,
         number_sessions: attendance_count,
         month: classInfo.month,
@@ -89,7 +89,7 @@ function ClassesList() {
     const fetchClassData = async () => {
       try {
         const classResponse = await axios.get(
-          `http://localhost:3001/classeinformation/${id}`
+          `http://erp-olfa-back.onrender.com/classeinformation/${id}`
         );
         const classInfo = classResponse.data.rows[0];
         setClassInfo(classInfo);
@@ -98,13 +98,13 @@ function ClassesList() {
         )
         const { teacher_id, groupnumber } = classInfo;
         const studentResponse = await axios.get(
-          `http://localhost:3001/ClassesList/${teacher_id}/${groupnumber}`
+          `http://erp-olfa-back.onrender.com/ClassesList/${teacher_id}/${groupnumber}`
         );
 
         const studentsWithAttendance = await Promise.all(
           studentResponse.data.map(async (student) => {
             const numberSeanceResponse = await axios.get(
-              `http://localhost:3001/getNumberSeance/${student.student_id}/${classInfo.id}`
+              `http://erp-olfa-back.onrender.com/getNumberSeance/${student.student_id}/${classInfo.id}`
             );
             const numberSeance = numberSeanceResponse.data.number_seance;
             return {
@@ -121,7 +121,7 @@ function ClassesList() {
         // Fetch teacher attendance
         try {
           const response = await axios.get(
-            `http://localhost:3001/getTeacherAttendance/${teacher_id}/${classInfo.id}`
+            `http://erp-olfa-back.onrender.com/getTeacherAttendance/${teacher_id}/${classInfo.id}`
           );
           const result = response.data;
 
@@ -137,7 +137,7 @@ function ClassesList() {
         // Fetch teacherinfo
         try {
           const response = await axios.get(
-            `http://localhost:3001/getTeachersinfo/${teacher_id}`
+            `http://erp-olfa-back.onrender.com/getTeachersinfo/${teacher_id}`
           );
           const result = response.data.rows;
           setteacherinfo(result);
@@ -154,7 +154,7 @@ function ClassesList() {
 
     const fetchAllStudents = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/getStudent");
+        const response = await axios.get("http://erp-olfa-back.onrender.com/getStudent");
         setAllStudents(response.data.rows);
       } catch (error) {
         console.error("Error fetching all students:", error);
@@ -194,7 +194,7 @@ function ClassesList() {
     try {
       await Promise.all(
         selectedStudent.map((student) =>
-          axios.post("http://localhost:3001/addClasseStd", {
+          axios.post("http://erp-olfa-back.onrender.com/addClasseStd", {
             studentId: student.id,
             groupNumber: groupnumber,
             teacherId: classInfo.teacher_id,
@@ -203,12 +203,12 @@ function ClassesList() {
       );
 
       const studentResponse = await axios.get(
-        `http://localhost:3001/ClassesList/${classInfo.teacher_id}/${groupnumber}`
+        `http://erp-olfa-back.onrender.com/ClassesList/${classInfo.teacher_id}/${groupnumber}`
       );
       const studentsWithAttendance = await Promise.all(
         studentResponse.data.map(async (student) => {
           const numberSeanceResponse = await axios.get(
-            `http://localhost:3001/getNumberSeance/${student.student_id}`
+            `http://erp-olfa-back.onrender.com/getNumberSeance/${student.student_id}`
           );
           const numberSeance = numberSeanceResponse.data.number_seance || 0;
           return {
@@ -271,9 +271,9 @@ function ClassesList() {
     };
 
     try {
-      await axios.post("http://localhost:3001/PresenceStd", attendanceRecords);
+      await axios.post("http://erp-olfa-back.onrender.com/PresenceStd", attendanceRecords);
       const response = await axios.post(
-        "http://localhost:3001/recordTeacherAttendance",
+        "http://erp-olfa-back.onrender.com/recordTeacherAttendance",
         teacherAttendanceRecord
       );
       if (response.data.includes("student attendance archived")) {
@@ -308,7 +308,7 @@ function ClassesList() {
 
     try {
       // Insert payment
-      await axios.post("http://localhost:3001/PaymentStudent", {
+      await axios.post("http://erp-olfa-back.onrender.com/PaymentStudent", {
         student_id: studentId,
         amount: paymentAmount,
         payment_date: currentDate,
@@ -341,7 +341,7 @@ function ClassesList() {
     const paymentAmount = pricePerSession * numberSeance;
 
     try {
-      await axios.post("http://localhost:3001/PaymentStudent", {
+      await axios.post("http://erp-olfa-back.onrender.com/PaymentStudent", {
         student_id: studentId,
         amount: paymentAmount,
         payment_date: currentDate,
@@ -367,7 +367,7 @@ function ClassesList() {
   };
 
   if (!classInfo) {
-    return <div>Loading...</div>;
+    return <div><Loader/></div>;
   }
 
   return (

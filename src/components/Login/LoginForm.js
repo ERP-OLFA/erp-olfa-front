@@ -14,7 +14,7 @@ function LoginPage() {
     // Simple check for demonstration. Replace with actual authentication logic.
     if (email === "olfa.larbi@gmail.com" && password === "94118429") {
       localStorage.setItem("isAuthenticated", true);
-      window.location.href = "/dashboard";
+      window.location.href='https://test-erp-olfa.netlify.app/'
     } else {
       alert("Invalid credentials");
     }

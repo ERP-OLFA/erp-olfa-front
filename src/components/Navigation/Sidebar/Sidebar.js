@@ -1,24 +1,26 @@
-// src/components/Sidebar/Sidebar.js
 import React, { useState } from 'react';
-import { Nav, Button, Offcanvas } from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
 import { useHistory, Link } from 'react-router-dom';
 import './Sidebar.css';
-import { FaHome, FaChalkboardTeacher, FaUserGraduate, FaCogs, FaSignOutAlt, FaBook } from 'react-icons/fa';
+import { FaHome, FaChalkboardTeacher, FaUserGraduate, FaSignOutAlt, FaBook } from 'react-icons/fa';
 
 function Sidebar() {
   const history = useHistory();
-  const [show, setShow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem('isAuthenticated');
+    window.location.href='https://test-erp-olfa.netlify.app/';
   };
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const toggleSidebar = () => setIsOpen(!isOpen);
 
   return (
     <>
-      <div className="sidebar d-none d-md-block"  style={{ direction: "rtl" }}>
+      <button className="toggle-btn" onClick={toggleSidebar}>
+        {isOpen ? 'Close' : 'Open'} Sidebar
+      </button>
+      <div className={`sidebar ${isOpen ? 'sidebar-open' : ''}`}>
         <Nav className="flex-column">
           <Nav.Item>
             <Link to="/dashboard" className="nav-link">
@@ -49,13 +51,12 @@ function Sidebar() {
 
           <hr />
           <Nav.Item>
-          <Link to="/Login" className="nav-link" onClick={handleLogout}>
-          <FaSignOutAlt className="me-2" /> تسجيل الخروج
+            <Link className="nav-link" onClick={handleLogout}>
+              <FaSignOutAlt className="me-2" /> تسجيل الخروج
             </Link>
           </Nav.Item>
         </Nav>
       </div>
-      
     </>
   );
 }

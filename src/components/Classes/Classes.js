@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 function Classes() {
   const history = useHistory();
   const [classes, setClasses] = useState([]);
@@ -12,7 +11,7 @@ function Classes() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/getClasses")
+      .get("http://erp-olfa-back.onrender.com/getClasses")
       .then((response) => {
         console.log(response.data);
         setClasses(response.data);
@@ -25,7 +24,7 @@ function Classes() {
 
   const classeInformation = (id) => {
     axios
-      .get(`http://localhost:3001/classeinformation/${id}`)
+      .get(`http://erp-olfa-back.onrender.com/classeinformation/${id}`)
       .then((response) => {
         setSelectedClassInfo(response.data);
         history.push(`/List/ClassesList/${id}`);

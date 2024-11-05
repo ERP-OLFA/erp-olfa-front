@@ -13,7 +13,7 @@ function Settings() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/ClassesAllList")
+      .get("http://erp-olfa-back.onrender.com/ClassesAllList")
       .then((response) => {
         console.log(response.data);
         setClasses(response.data.rows);
@@ -30,7 +30,7 @@ function Settings() {
   const deleteStudent = (id) => {
     const isConfirmed = window.confirm("هل أنت متأكد أنك تريد حذف هذا التلميذ؟");
     if (isConfirmed) {
-      axios.delete(`http://localhost:3001/deleteClasseStd/${id}`).then((response) => {
+      axios.delete(`http://erp-olfa-back.onrender.com/deleteClasseStd/${id}`).then((response) => {
         console.log(response.data);
         // Optionally, refetch the classes or remove the deleted item from state
         setClasses(classes.filter(classe => classe.classelist_id !== id));

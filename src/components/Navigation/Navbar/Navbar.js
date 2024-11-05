@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Navbar, Nav, Button, Offcanvas } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { FaHome, FaChalkboardTeacher, FaUserGraduate, FaCogs, FaSignOutAlt, FaBook } from "react-icons/fa";
 
 function CustomNavbar() {
@@ -9,7 +9,8 @@ function CustomNavbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
-    history.push("/");
+    window.location.href='https://test-erp-olfa.netlify.app/'
+    // Navigate to login page after logout
   };
 
   const handleClose = () => setShow(false);
@@ -46,40 +47,35 @@ function CustomNavbar() {
         <Offcanvas.Body className="bg-light">
           <Nav className="flex-column">
             <Nav.Item className="my-2">
-              <Nav.Link href="/dashboard" className="text-primary">
+              <Link to="/dashboard" className="nav-link text-primary">
                 <FaHome className="me-2" /> الصفحة الرئيسية
-              </Nav.Link>
+              </Link>
             </Nav.Item>
-            
             <Nav.Item className="my-2">
-              <Nav.Link href="/List/Classes" className="text-primary">
+              <Link to="/List/Classes" className="nav-link text-primary">
                 <FaBook className="me-2" /> الأقسام
-              </Nav.Link>
+              </Link>
             </Nav.Item>
             <Nav.Item className="my-2">
-              <Nav.Link href="/List/Std" className="text-primary">
+              <Link to="/List/Std" className="nav-link text-primary">
                 <FaUserGraduate className="me-2" /> التلاميذ
-              </Nav.Link>
+              </Link>
             </Nav.Item>
             <Nav.Item className="my-2">
-              <Nav.Link href="/List/Teacher" className="text-primary">
+              <Link to="/List/Teacher" className="nav-link text-primary">
                 <FaChalkboardTeacher className="me-2" /> الأساتذة
-              </Nav.Link>
+              </Link>
             </Nav.Item>
             <Nav.Item className="my-2">
-              <Nav.Link href="/List/Settings" className="text-primary">
+              <Link to="/List/Settings" className="nav-link text-primary">
                 <FaCogs className="me-2" /> الإعدادات
-              </Nav.Link>
+              </Link>
             </Nav.Item>
             <hr />
             <Nav.Item className="my-2">
-              <Nav.Link
-                onClick={handleLogout}
-                className="text-danger"
-                style={{ cursor: "pointer" }}
-              >
+              <Link to="/Login" className="nav-link text-danger" onClick={handleLogout}>
                 <FaSignOutAlt className="me-2" /> تسجيل الخروج
-              </Nav.Link>
+              </Link>
             </Nav.Item>
           </Nav>
         </Offcanvas.Body>

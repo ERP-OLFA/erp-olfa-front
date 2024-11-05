@@ -1,8 +1,8 @@
-import { Container, Row, Col, Modal, Table, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Modal, Table, Button, Form, Spinner, Alert } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom"; 
-
+import { useHistory } from "react-router-dom";
+import Loader from "../Loader/Loader.js";
 function NewClasse() {
   const history = useHistory();
 
@@ -14,6 +14,8 @@ function NewClasse() {
   });
 
   const [showModalteacher, setShowModalteacher] = useState(false);
+  const [loading, setLoading] = useState(false); // Loader state
+  const [alert, setAlert] = useState(null); // Alert state
 
   useEffect(() => {
     getTeachers();
@@ -21,7 +23,7 @@ function NewClasse() {
 
   const getTeachers = () => {
     axios
-      .get("http://localhost:3001/getTeacher")
+      .get("http://erp-olfa-back.onrender.com/getTeacher")
       .then((response) => {
         setTeachers(response.data.rows);
       })
@@ -33,9 +35,10 @@ function NewClasse() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Show loader
 
     try {
-      const response = await fetch("http://localhost:3001/addClasses", {
+      const response = await fetch("http://erp-olfa-back.onrender.com/addClasses", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,12 +53,16 @@ function NewClasse() {
           TeacherName: "",
           subject: "",
         });
-        history.push("/List/Classes"); 
+        history.push("/List/Classes");
       } else {
         console.error("Failed to insert data");
+        setAlert({ message: "فشل في إدخال البيانات", variant: "danger" });
       }
     } catch (error) {
       console.error("Error inserting data:", error);
+      setAlert({ message: "حدث خطأ أثناء إدخال البيانات", variant: "danger" });
+    } finally {
+      setLoading(false); // Hide loader
     }
   };
 
@@ -136,9 +143,16 @@ function NewClasse() {
                 variant="primary"
                 className="btn-lg btn-block"
                 style={{ fontSize: "1.5rem" }}
+                disabled={loading} // Disable button when loading
               >
-                تسجيل
+                {loading ? <Loader /> : "تسجيل"}
               </Button>
+
+              {alert && (
+                <Alert variant={alert.variant} className="mt-3">
+                  {alert.message}
+                </Alert>
+              )}
             </Form>
           </Col>
         </Row>

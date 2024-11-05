@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./Newstd.css"; // Import custom CSS
-
+import { Spinner, Alert } from "react-bootstrap"; // Import necessary components from React Bootstrap
+import Loader from "../../Loader/Loader";
 function Newstd() {
   const [formData, setFormData] = useState({
     nom: "",
@@ -10,13 +11,16 @@ function Newstd() {
     cardid: "",
   });
   const [submitSuccess, setSubmitSuccess] = useState(false); // State to track success
+  const [loading, setLoading] = useState(false); // Loader state
+  const [alert, setAlert] = useState(null); // Alert state
   const history = useHistory(); // Initialize useHistory hook
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Show loader
 
     try {
-      const response = await fetch("http://localhost:3001/addStudent", {
+      const response = await fetch("http://erp-olfa-back.onrender.com/addStudent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,12 +36,15 @@ function Newstd() {
         }, 2000); // Redirect after 2 seconds
       } else {
         console.error("Failed to insert data");
+        setAlert({ message: "فشل في إدخال البيانات", variant: "danger" });
       }
     } catch (error) {
       console.error("Error inserting data:", error);
+      setAlert({ message: "حدث خطأ أثناء إدخال البيانات", variant: "danger" });
+    } finally {
+      setLoading(false); // Hide loader
     }
     window.scrollTo(0, 0);
-
   };
 
   const handleChange = (e) => {
@@ -49,6 +56,12 @@ function Newstd() {
 
   return (
     <div className="newstd-container">
+      {alert && (
+        <Alert variant={alert.variant} role="alert">
+          {alert.message}
+        </Alert>
+      )}
+      
       {submitSuccess && (
         <div className="alert alert-success" role="alert">
           <svg
@@ -123,8 +136,9 @@ function Newstd() {
         <button
           type="submit"
           className="btn btn-primary btn-block"
+          disabled={loading} // Disable button when loading
         >
-          تسجيل
+          {loading ? <Loader /> : "تسجيل"}
         </button>
       </form>
     </div>

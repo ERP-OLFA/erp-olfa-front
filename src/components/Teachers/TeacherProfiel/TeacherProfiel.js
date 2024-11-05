@@ -33,7 +33,7 @@ function TeacherProfile() {
             });
 
             axios
-                .get(`http://localhost:3001/studentDetailsByTeacher/${teacherId}`)
+                .get(`http://erp-olfa-back.onrender.com/studentDetailsByTeacher/${teacherId}`)
                 .then((response) => {
                     const data = response.data;
                     setStudents(data);

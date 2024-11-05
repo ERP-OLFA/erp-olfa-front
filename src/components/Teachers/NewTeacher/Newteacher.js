@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { Spinner } from "react-bootstrap"; // Import Spinner
 import "./Newteacher.css"; // Import custom CSS
-
+import Loader from "../../Loader/Loader";
 function Newteacher() {
   const history = useHistory();
   
@@ -22,7 +23,7 @@ function Newteacher() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:3001/addTeacher', {
+      const response = await fetch('http://erp-olfa-back.onrender.com/addTeacher', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,8 +46,6 @@ function Newteacher() {
       setIsSubmitting(false);
     }
     window.scrollTo(0, 0);
-
-
   };
 
   const handleChange = (e) => {
@@ -113,18 +112,6 @@ function Newteacher() {
             required
           />
         </div>
-        {/* <div className="form-group">
-          <label htmlFor="cardid">رقم البطاقة الوطنية</label>
-          <input
-            type="text"
-            className="form-control"
-            id="cardid"
-            placeholder="رقم البطاقة الوطنية"
-            value={formData.cardid}
-            onChange={handleChange}
-            required
-          />
-        </div> */}
         <div className="form-group">
           <label htmlFor="subject">المادة</label>
           <input
@@ -154,7 +141,14 @@ function Newteacher() {
           className="btn btn-primary"
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'جاري التسجيل...' : 'تسجيل'}
+          {isSubmitting ? (
+            <span>
+              <Loader /> {/* Spinner */}
+              جاري التسجيل...
+            </span>
+          ) : (
+            'تسجيل'
+          )}
         </button>
       </form>
     </div>
